@@ -3,38 +3,43 @@ import emailjs from '@emailjs/browser';
 import './Email.css'
 
 export const Email = () => {
-const [object,setObject] =useState();
+
   const form = useRef();
 
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm('gmail', 'template_4xx5fzq', form.current, 'zcVknxw-uhLECIoSj')
-      .then((result) => {
-          console.log(result.text);
-      }, (error) => {
-          console.log(error.text);
+    console.log(form.current.name.value);
+    const templateParams = {
+      name: 'James',
+      message: 'Check this out!',
+      object : 'hiroshachandramal01@gmail.com gethmakadisanayaka@gmail.com'
+  };
+   
+  emailjs.send('gmail', 'template_4xx5fzq', templateParams,'zcVknxw-uhLECIoSj')
+      .then(function(response) {
+         console.log('SUCCESS!', response.status, response.text);
+      }, function(error) {
+         console.log('FAILED...', error);
       });
-      e.target.reset();
-      console.log(object);
-
+      
   };
 
   return (
     <div>
         <form ref={form} onSubmit={sendEmail}>
-        <label>Name</label>
+        {/* <label>Name</label>
         <input type="text" name="name" /><br/>
-        <label>subject</label>
+        <label>Subject</label>
         <input type="text" name="subject" /><br/>
         <label>Email</label>
         <input type="text" name="email" /><br/>
         <label>Message</label>
-        <textarea name="message" /><br/>
+        <textarea name="message" /><br/> */}
         <input type="submit" value="Send" />
         </form>
-
        
     </div>
   )
 }
+
